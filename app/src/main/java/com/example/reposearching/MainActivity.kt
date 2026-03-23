@@ -8,6 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.reposearching.ui.navigation.AppBottomNavigation
+import com.example.reposearching.ui.navigation.Screen
+import com.example.reposearching.ui.screens.BookmarkScreen
 import com.example.reposearching.ui.screens.SearchScreen
 import com.example.reposearching.ui.theme.RepoSearchingTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,9 +25,24 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RepoSearchingTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    // 將 innerPadding 應用在 SearchScreen 上，避免內容被狀態列或導覽列遮住
-                    SearchScreen(modifier = Modifier.padding(innerPadding))
+                val navController = rememberNavController()
+                
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = { AppBottomNavigation(navController) }
+                ) { innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.Search.route,
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
+                        composable(Screen.Search.route) {
+                            SearchScreen()
+                        }
+                        composable(Screen.Bookmark.route) {
+                            BookmarkScreen()
+                        }
+                    }
                 }
             }
         }

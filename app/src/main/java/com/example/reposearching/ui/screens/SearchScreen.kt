@@ -9,11 +9,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.reposearching.R
 import com.example.reposearching.ui.components.RepoList
 import com.example.reposearching.ui.viewmodel.SearchViewModel
 import java.io.IOException
@@ -34,7 +36,7 @@ fun SearchScreen(
                 viewModel.search(it)
             },
             modifier = Modifier.fillMaxWidth().padding(16.dp),
-            placeholder = { Text("搜尋 GitHub Repo") },
+            placeholder = { Text(stringResource(R.string.search_hint)) },
             singleLine = true
         )
         
@@ -47,7 +49,7 @@ fun SearchScreen(
             // [關鍵修改]：如果搜尋文字為空，不論狀態為何，都顯示提示文字而不是轉圈
             if (text.isBlank()) {
                 Text(
-                    text = "請輸入關鍵字搜尋",
+                    text = stringResource(R.string.search_empty_hint),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -64,16 +66,16 @@ fun SearchScreen(
                             val isNetworkError = refreshState.error is IOException
                             if (isNetworkError) {
                                 Text(
-                                    text = "無網路連線",
+                                    text = stringResource(R.string.search_network_error),
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.error
                                 )
                                 Button(onClick = { repos.retry() }) {
-                                    Text("重新載入")
+                                    Text(stringResource(R.string.search_retry))
                                 }
                             } else {
                                 Text(
-                                    text = "查詢異常，請稍後再試",
+                                    text = stringResource(R.string.search_general_error),
                                     style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.error,
                                     textAlign = TextAlign.Center
@@ -84,12 +86,18 @@ fun SearchScreen(
                     is LoadState.NotLoading -> {
                         if (repos.itemCount == 0) {
                             Text(
-                                text = "查無資料",
+                                text = stringResource(R.string.search_no_data),
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         } else {
-                            RepoList(repos = repos)
+                            RepoList(
+                                repos = repos,
+                                isBookmarked = { repoId -> viewModel.isBookmarked(repoId) },
+                                onBookmarkToggle = { repo, currentlyBookmarked ->
+                                    viewModel.toggleBookmark(repo, currentlyBookmarked)
+                                }
+                            )
                         }
                     }
                 }

@@ -74,6 +74,11 @@ dependencies {
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.testing)
 
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
     // 單元測試相關
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

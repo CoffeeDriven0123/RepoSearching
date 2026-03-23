@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">RepoSearching</string>
+    <string name="content_description_owner_avatar">%1$s owner avatar</string>
+    <string name="label_star_count">⭐️ %1$d</string>
+    <string name="content_description_remove_bookmark">移除收藏</string>
+    <string name="content_description_add_bookmark">加入收藏</string>
+    <string name="search_hint">請輸入關鍵字搜尋</string>
+    <string name="search_empty_hint">請輸入關鍵字搜尋</string>
+    <string name="search_no_data">查無資料</string>
+    <string name="search_network_error">無網路連線</string>
+    <string name="search_retry">重新載入</string>
+    <string name="search_general_error">查詢異常，請稍後再試</string>
+    <string name="title_bookmarks">我的最愛</string>
+    <string name="bookmark_empty_hint">目前還沒有收藏任何 Repository 喔！</string>
+    <string name="nav_search">搜尋</string>
+    <string name="nav_bookmarks">收藏</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.example.reposearching.di
 
+import com.example.reposearching.data.repository.BookmarkRepositoryImpl
 import com.example.reposearching.data.repository.GithubRepositoryImpl
 import com.example.reposearching.data.repository.MockGithubRepositoryImpl
+import com.example.reposearching.domain.repository.BookmarkRepository
 import com.example.reposearching.domain.repository.GithubRepository
 import dagger.Binds
 import dagger.Module
@@ -23,4 +25,10 @@ abstract class RepositoryModule {
 //    abstract fun bindMockGithubRepository(
 //        mockGithubRepositoryImpl: MockGithubRepositoryImpl
 //    ): GithubRepository
+
+    @Binds
+    abstract fun bindBookmarkRepository(
+        bookmarkRepositoryImpl: BookmarkRepositoryImpl
+    ): BookmarkRepository
 }
+
